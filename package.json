@@ -1,0 +1,23 @@
+{
+  "name": "blank-canvas",
+  "version": "1.0.0",
+  "description": "Wanna write some beginner canvas code Copying: https://github.com/nodeschool/wellington/tree/master/website",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JosephJvB/blank-canvas.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JosephJvB/blank-canvas/issues"
+  },
+  "homepage": "https://github.com/JosephJvB/blank-canvas#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
