@@ -1,0 +1,14 @@
+From xkcd
+
+Search comic titles and transcripts:
+<script type="text/javascript" src="//www.google.com/jsapi"></script>
+<script type="text/javascript">google.load('search', '1');google.setOnLoadCallback(function() {google.search.CustomSearchControl.attachAutoCompletion('012652707207066138651:zudjtuwe28q',document.getElementById('q'),'cse-search-box');});</script>
+<form action="//www.google.com/cse" id="cse-search-box">
+<div>
+<input type="hidden" name="cx" value="012652707207066138651:zudjtuwe28q"/>
+<input type="hidden" name="ie" value="UTF-8"/>
+<input type="text" name="q" id="q" size="31"/>
+<input type="submit" name="sa" value="Search"/>
+</div>
+</form>
+<script type="text/javascript" src="//www.google.com/cse/brand?form=cse-search-box&amp;lang=en"></script>
