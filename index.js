@@ -1,48 +1,54 @@
 console.log('====\n\n script loaded \n\n====');
 
-const C = document.querySelector('canvas');
-const ctx = C.getContext('2d');
-const rec = C.getBoundingClientRect();
+const canvas = document.querySelector('canvas');
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
 
-function clicker () {
-    ripp = new Ripple();
-    anni();
-}
+const ctx = canvas.getContext('2d');
 
-function anni () {
-    ctx.clearRect(0,0,rec.width, rec.height);
-    ripp.draw();
-    requestAnimationFrame(anni);
-}
+let ripples = []
+let tot = window.innerHeight * window.innerWidth * 0.0002;
+for(let i = 0; i < tot; i ++) ripples.push(new Ripple());
 
-function Ripple () {
+(function animate () {
+    const c = canvas.getBoundingClientRect();
+    ctx.clearRect(0,0,c.width,c.height);
+    ripples.forEach(r => r.draw());
+    requestAnimationFrame(animate);
+})();
 
-    let state = {};
 
-    const init = () => {
-        console.log('rip init');
-        state.r = Math.random() * (30 - 5) + 5;
-        state.x = Math.random() * 300;
-        state.y = Math.random() * 150;
-        state.max = Math.random() * (100 - 25) + 25;
-        state.v = Math.random() * (0.9 - 0.4) + 0.4;
+/*
+left = 37
+up = 38
+right = 39
+down = 40
+*/
+canvas.addEventListener('keydown', (e) => {
+    if((e.keyCode == 39) || (e.keyCode == 38)) {
+        console.log('up')
+        ripples.push(new Ripple())
     }
-
-    // constructor
-    (() => {
-        init();
-    })();
-
-
-    this.draw = () => {
-        // if circle gets too big, start again
-        if(state.r >= state.max) {
-            init();
-        }
-        state.r += state.v;
-        ctx.beginPath();
-        ctx.arc(state.x, state.y, state.r, 0, 2 * Math.PI, false);
-        ctx.strokeStyle = 'black';
-        ctx.stroke();
+    if((e.keyCode == 37) || (e.keyCode == 40)) {
+        console.log('down')
+        ripples.pop();
     }
-}
+});
+
+window.addEventListener('resize', (e) => {
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+    // control ripple numbers...
+    // let newTot = window.innerHeight * window.innerWidth * 0.0002;
+    // if(tot > newTot) {
+    //     while(tot > newTot) {
+    //         ripples.pop();
+    //         tot--;
+    //     }
+    // } else {
+    //     while(tot < newTot) {
+    //         ripples.push(new Ripple());
+    //         tot++;
+    //     }
+    // }
+});
