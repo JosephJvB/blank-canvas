@@ -7,7 +7,7 @@ canvas.width = window.innerWidth;
 const ctx = canvas.getContext('2d');
 
 let ripples = []
-let tot = window.innerHeight * window.innerWidth * 0.0002;
+let tot = window.innerHeight * window.innerWidth * 0.000005;
 for(let i = 0; i < tot; i ++) ripples.push(new Ripple());
 
 (function animate () {
@@ -17,7 +17,6 @@ for(let i = 0; i < tot; i ++) ripples.push(new Ripple());
     requestAnimationFrame(animate);
 })();
 
-
 /*
 left = 37
 up = 38
@@ -26,14 +25,20 @@ down = 40
 */
 canvas.addEventListener('keydown', (e) => {
     if((e.keyCode == 39) || (e.keyCode == 38)) {
-        console.log('up')
         ripples.push(new Ripple())
     }
     if((e.keyCode == 37) || (e.keyCode == 40)) {
-        console.log('down')
         ripples.pop();
     }
 });
+
+canvas.addEventListener('mousemove', (e) => {
+    ripples.push(new Ripple({
+        x: e.clientX,
+        y: e.clientY,
+        temp: true
+    }));
+})
 
 window.addEventListener('resize', (e) => {
     canvas.height = window.innerHeight;
