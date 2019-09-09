@@ -1,15 +1,17 @@
 console.log('====\n\n script loaded \n\n====');
 
+// globals
 const canvas = document.querySelector('canvas');
+const ctx = canvas.getContext('2d');
+let ripples = [] // ripple.js
+let totalRipples = 0;
+let colourize = false;
+const counter = new Counter(); // counter.js
+
+// setup canvas
 canvas.height = window.innerHeight;
 canvas.width = window.innerWidth;
 canvas.focus();
-const ctx = canvas.getContext('2d');
-
-let ripples = []
-let totalRipples = window.innerHeight * window.innerWidth * 0.000005;
-for(let i = 0; i < totalRipples; i ++) ripples.push(new Ripple());
-const counter = new Counter();
 
 (function animate () {
     const c = canvas.getBoundingClientRect();
@@ -27,6 +29,7 @@ left = 37
 up = 38
 right = 39
 down = 40
+enter = 13
 */
 canvas.addEventListener('keydown', (e) => {
     if((e.keyCode == 39) || (e.keyCode == 38)) {
@@ -37,9 +40,13 @@ canvas.addEventListener('keydown', (e) => {
         ripples.pop();
         totalRipples--;
     }
+    if(e.keyCode == 13) {
+        colourize = !colourize;
+    }
 });
 
 canvas.addEventListener('mousemove', (e) => {
+    if(colourize) return;
     ripples.push(new Ripple({
         x: e.clientX,
         y: e.clientY,
@@ -47,24 +54,7 @@ canvas.addEventListener('mousemove', (e) => {
     }));
 })
 
-// todo: add ripples on screen grow, remove on screen shrink
-// hard is: how many should I add / remove?
 window.addEventListener('resize', (e) => {
-    // const currentSize = canvas.height * canvas.width * 0.0002;
-    // const newSize = window.innerHeight * window.innerWidth * 0.0002;
-    
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
-    
-    // if(currentSize > newSize) {
-    //     while(currentSize > newSize) {
-    //         ripples.pop();
-    //         currentSize--;
-    //     }
-    // } else {
-    //     while(currentSize < newSize) {
-    //         ripples.push(new Ripple());
-    //         currentSize++;
-    //     }
-    // }
 });
