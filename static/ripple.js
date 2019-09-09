@@ -22,9 +22,9 @@ function Ripple (opts = {}) {
         if(colourize) {
             // these numbers make pretty colours, no logic
             this.state.rgb = [
-                Math.floor(200 - 25 * this.state.x.toString()[0]),
-                Math.floor(200 - 25 * this.state.x.toString()[1]),
-                Math.floor(200 - 25 * this.state.x.toString()[2])
+                Math.floor(255 - 28.3 * this.state.x.toString()[0]),
+                Math.floor(255 - 28.3 * this.state.x.toString()[1]),
+                Math.floor(255 - 28.3 * this.state.x.toString()[2])
             ];
             this.state.fill = Math.random() >= (ripples.length / 200);
         } else {
