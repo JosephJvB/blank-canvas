@@ -1,3 +1,5 @@
+// GLOBALS
+// index.js: ctx
 function Ripple (opts = {}) {
 
     this.state = {

@@ -3,12 +3,13 @@ console.log('====\n\n script loaded \n\n====');
 const canvas = document.querySelector('canvas');
 canvas.height = window.innerHeight;
 canvas.width = window.innerWidth;
-
+canvas.focus();
 const ctx = canvas.getContext('2d');
 
 let ripples = []
 let totalRipples = window.innerHeight * window.innerWidth * 0.000005;
 for(let i = 0; i < totalRipples; i ++) ripples.push(new Ripple());
+const counter = new Counter();
 
 (function animate () {
     const c = canvas.getBoundingClientRect();
@@ -17,6 +18,7 @@ for(let i = 0; i < totalRipples; i ++) ripples.push(new Ripple());
         ripples = ripples.filter(r => r.state.alive);
     }
     ripples.forEach(r => r.draw());
+    counter.draw();
     requestAnimationFrame(animate);
 })();
 
@@ -45,20 +47,24 @@ canvas.addEventListener('mousemove', (e) => {
     }));
 })
 
+// todo: add ripples on screen grow, remove on screen shrink
+// hard is: how many should I add / remove?
 window.addEventListener('resize', (e) => {
+    // const currentSize = canvas.height * canvas.width * 0.0002;
+    // const newSize = window.innerHeight * window.innerWidth * 0.0002;
+    
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
-    // control ripple numbers...
-    // let newTot = window.innerHeight * window.innerWidth * 0.0002;
-    // if(tot > newTot) {
-    //     while(tot > newTot) {
+    
+    // if(currentSize > newSize) {
+    //     while(currentSize > newSize) {
     //         ripples.pop();
-    //         tot--;
+    //         currentSize--;
     //     }
     // } else {
-    //     while(tot < newTot) {
+    //     while(currentSize < newSize) {
     //         ripples.push(new Ripple());
-    //         tot++;
+    //         currentSize++;
     //     }
     // }
 });
