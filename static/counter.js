@@ -10,11 +10,17 @@ function Counter () {
   })();
 
   this.draw = () => {
-    const x = window.innerWidth / 2 - 27;
-    const y = window.innerHeight / 2;
+    const n = ripples.length;
+    const digitOffset = (n.toString().length - 1) * 15;
+    const x = window.innerWidth / 2 - digitOffset;
+    const y = window.innerHeight / 2 - 20;
     // github code font family
     ctx.font = '100 48px SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace';
     ctx.fillStyle = 'black';
-    ctx.fillText(ripples.length, x, y);
+    ctx.fillText(n, x, y);
+    if(n.toString().includes(69)) {
+      ctx.font = '100 12px SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace';
+      ctx.fillText('nice', x + digitOffset, y + 20);
+    }
   }
 }

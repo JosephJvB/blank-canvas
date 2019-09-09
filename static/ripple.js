@@ -13,7 +13,7 @@ function Ripple (opts = {}) {
     };
 
     const spawn = () => {
-        const c = document.querySelector('canvas').getBoundingClientRect()
+        const c = document.querySelector('canvas').getBoundingClientRect();
         this.state.r = Math.random() * (10 - 5) + 5;
         this.state.x =  opts.x || Math.random() * c.width;
         this.state.y = opts .y || Math.random() * c.height;

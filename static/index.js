@@ -30,18 +30,34 @@ up = 38
 right = 39
 down = 40
 enter = 13
+backspace = 8
 */
 canvas.addEventListener('keydown', (e) => {
-    if((e.keyCode == 39) || (e.keyCode == 38)) {
-        ripples.push(new Ripple());
-        totalRipples++;
-    }
-    if((e.keyCode == 37) || (e.keyCode == 40)) {
-        ripples.pop();
-        totalRipples--;
-    }
-    if(e.keyCode == 13) {
-        colourize = !colourize;
+    switch(e.keyCode) {
+        case 38:
+        case 39: {
+            ripples.push(new Ripple());
+            totalRipples++;
+            return;
+        }
+        // todo: dont immediately remove
+        // flag ripple as alive = false. It wont respawn
+        case 37:
+        case 40: {
+            ripples.pop();
+            totalRipples--;
+            return;
+        }
+        case 13: {
+            colourize = !colourize;
+            return;
+        }
+        case 8: {
+            ripples = [];
+            totalRipples = 0;
+            return;
+        }
+        default: return;
     }
 });
 
