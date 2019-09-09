@@ -7,12 +7,15 @@ canvas.width = window.innerWidth;
 const ctx = canvas.getContext('2d');
 
 let ripples = []
-let tot = window.innerHeight * window.innerWidth * 0.000005;
-for(let i = 0; i < tot; i ++) ripples.push(new Ripple());
+let totalRipples = window.innerHeight * window.innerWidth * 0.000005;
+for(let i = 0; i < totalRipples; i ++) ripples.push(new Ripple());
 
 (function animate () {
     const c = canvas.getBoundingClientRect();
     ctx.clearRect(0,0,c.width,c.height);
+    if(ripples.length > totalRipples) {
+        ripples = ripples.filter(r => r.state.alive);
+    }
     ripples.forEach(r => r.draw());
     requestAnimationFrame(animate);
 })();
@@ -25,10 +28,12 @@ down = 40
 */
 canvas.addEventListener('keydown', (e) => {
     if((e.keyCode == 39) || (e.keyCode == 38)) {
-        ripples.push(new Ripple())
+        ripples.push(new Ripple());
+        totalRipples++;
     }
     if((e.keyCode == 37) || (e.keyCode == 40)) {
         ripples.pop();
+        totalRipples--;
     }
 });
 

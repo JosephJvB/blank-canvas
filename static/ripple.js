@@ -1,6 +1,8 @@
 function Ripple (opts = {}) {
 
-    this.state = {};
+    this.state = {
+        alive: true
+    };
 
     const spawn = () => {
         const c = document.querySelector('canvas').getBoundingClientRect()
@@ -10,14 +12,6 @@ function Ripple (opts = {}) {
         this.state.v = Math.random() * (1.1 - 0.4) + 0.4;
     };
 
-    const destroy = () => {
-        const idx = ripples.findIndex(r => (
-            r.state.x === this.state.x && r.state.y === this.state.y
-        ));
-        // alter global ripples array
-        ripples.splice(idx, 1);
-    }
-
     // constructor
     (() => {
         spawn();
@@ -26,7 +20,7 @@ function Ripple (opts = {}) {
     // reset if alpha/velocity is 0
     this.draw = () => {
         if(this.state.v <= 0) {
-            if(opts.temp) return destroy();
+            if(opts.temp) { this.state.alive = false; return ;}
             else spawn();
         }
         this.state.r += this.state.v;
