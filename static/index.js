@@ -3,14 +3,14 @@ console.log('====\n\n script loaded \n\n====');
 // globals
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
-let ripples = [] // ripple.js
+let ripples = [];
 let colourize = false;
 let mode = 1;
 const counter = new Counter(); // counter.js
 const dict = {
-    1: Ripple,
-    2: Bubble,
-    // 3: Ball
+    1: Ripple, // ripple.js
+    2: Bubble, // bubble.js
+    // 3: Ball todo
 };
 
 // setup canvas
@@ -22,7 +22,14 @@ canvas.focus();
     const c = canvas.getBoundingClientRect();
     ctx.clearRect(0,0,c.width,c.height);
     // is there a better way to remove ripples from screen?
-    ripples = ripples.filter(r => r.state.alive);
+    ripples = ripples.reduce((rips, r) => {
+        if(!r.state.alive) {
+            if(r.state.temp) return rips;
+            if(r.state.mode !== mode) rips.push(new dict[mode]());
+        }
+        else rips.push(r);
+        return rips;
+    }, []);
     ripples.forEach(r => r.draw());
     counter.draw();
     requestAnimationFrame(animate);

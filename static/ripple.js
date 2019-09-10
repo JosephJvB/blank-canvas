@@ -1,13 +1,9 @@
-/*
-globals @ index.js
-colourize = bool, colour&fill ripples on true, black&unfilled on false
-ctx = canvas dom-element 2d-context:
-    https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
-*/
 function Ripple (opts = {}) {
 
     this.state = {
         alive: true,
+        temp: opts.temp,
+        mode: 1
     };
 
     const spawn = () => {
@@ -27,7 +23,7 @@ function Ripple (opts = {}) {
     // reset if alpha/velocity is 0
     this.draw = () => {
         if(this.state.v <= 0) {
-            if(mode !== 1 || opts.temp) {
+            if(mode !== this.state.mode || opts.temp) {
                 this.state.alive = false;
                 return;
             }

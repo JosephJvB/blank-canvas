@@ -1,6 +1,7 @@
 function Bubble () {
     this.state = {
-        alive: true
+        alive: true,
+        mode: 2
     };
 
     const spawn = () => {
@@ -26,7 +27,7 @@ function Bubble () {
 
     this.draw = () => {
         if(this.state.v <= 0) {
-            if(mode !== 2) {
+            if(mode !== this.state.mode) {
                 this.state.alive = false;
                 return;
             }
