@@ -3,7 +3,7 @@ console.log('====\n\n script loaded \n\n====');
 // globals
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
-let ripples = [];
+let circles = [];
 let colourize = false;
 let mode = 1;
 const counter = new Counter(); // counter.js
@@ -21,8 +21,8 @@ canvas.focus();
 (function animate () {
     const c = canvas.getBoundingClientRect();
     ctx.clearRect(0,0,c.width,c.height);
-    // is there a better way to remove ripples from screen?
-    ripples = ripples.reduce((rips, r) => {
+    // is there a better way to remove circles from screen?
+    circles = circles.reduce((rips, r) => {
         if(!r.state.alive) {
             if(r.state.temp) return rips;
             if(r.state.mode !== mode) rips.push(new dict[mode]());
@@ -30,7 +30,7 @@ canvas.focus();
         else rips.push(r);
         return rips;
     }, []);
-    ripples.forEach(r => r.draw());
+    circles.forEach(r => r.draw());
     counter.draw();
     requestAnimationFrame(animate);
 })();
@@ -47,13 +47,13 @@ canvas.addEventListener('keydown', (e) => {
     switch(e.keyCode) {
         case 38:
         case 39: {
-            ripples.push(new dict[mode]());
+            circles.push(new dict[mode]());
             return;
         }
         case 37:
         case 40: {
-            if(!ripples[0]) return;
-            ripples[0].state.alive = false;
+            if(!circles[0]) return;
+            circles[0].state.alive = false;
             return;
         }
         case 13: {
@@ -62,7 +62,7 @@ canvas.addEventListener('keydown', (e) => {
             return;
         }
         case 8: {
-            ripples = [];
+            circles = [];
             return;
         }
         default: return;
@@ -71,7 +71,7 @@ canvas.addEventListener('keydown', (e) => {
 
 canvas.addEventListener('mousemove', (e) => {
     if(mode !== 1) return;
-    ripples.push(new Ripple({
+    circles.push(new Ripple({
         x: e.clientX,
         y: e.clientY,
         temp: true

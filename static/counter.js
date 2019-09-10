@@ -4,7 +4,7 @@ function Counter () {
   })();
 
   this.draw = () => {
-    const n = ripples.length;
+    const n = circles.length;
     const digitOffset = (n.toString().length - 1) * 15;
     const x = window.innerWidth / 2 - digitOffset;
     const y = window.innerHeight / 2 - 20;

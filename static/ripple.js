@@ -27,13 +27,13 @@ function Ripple (opts = {}) {
                 this.state.alive = false;
                 return;
             }
-            else spawn();
+            spawn();
         }
 
         ctx.beginPath();
         ctx.arc(this.state.x, this.state.y, this.state.r, 0, 2 * Math.PI, false);
-        ctx.strokeStyle = `rgba(0,0,0,${this.state.v})`;
         ctx.lineWidth = this.state.lw;
+        ctx.strokeStyle = `rgba(0,0,0,${this.state.v})`;
         ctx.stroke();
 
         this.state.r += this.state.v;
