@@ -4,7 +4,6 @@ console.log('====\n\n script loaded \n\n====');
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 let ripples = [] // ripple.js
-let totalRipples = 0;
 let colourize = false;
 const counter = new Counter(); // counter.js
 
@@ -16,9 +15,8 @@ canvas.focus();
 (function animate () {
     const c = canvas.getBoundingClientRect();
     ctx.clearRect(0,0,c.width,c.height);
-    if(ripples.length > totalRipples) {
-        ripples = ripples.filter(r => r.state.alive);
-    }
+    // is there a better way to remove ripples from screen?
+    ripples = ripples.filter(r => r.state.alive);
     ripples.forEach(r => r.draw());
     counter.draw();
     requestAnimationFrame(animate);
@@ -36,16 +34,13 @@ canvas.addEventListener('keydown', (e) => {
     switch(e.keyCode) {
         case 38:
         case 39: {
-            ripples.push(new Ripple());
-            totalRipples++;
+            // ripples.push(new Ripple());
+            ripples.push(new Bubble());
             return;
         }
-        // todo: dont immediately remove
-        // flag ripple as alive = false. It wont respawn
         case 37:
         case 40: {
-            ripples.pop();
-            totalRipples--;
+            ripples[0].state.alive = false;
             return;
         }
         case 13: {
@@ -54,7 +49,6 @@ canvas.addEventListener('keydown', (e) => {
         }
         case 8: {
             ripples = [];
-            totalRipples = 0;
             return;
         }
         default: return;
