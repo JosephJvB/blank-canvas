@@ -1,5 +1,7 @@
 function Bubble () {
-    this.state = {};
+    this.state = {
+        alive: true
+    };
 
     const spawn = () => {
         const c = document.querySelector('canvas').getBoundingClientRect();
@@ -24,6 +26,10 @@ function Bubble () {
 
     this.draw = () => {
         if(this.state.v <= 0) {
+            if(mode !== 2) {
+                this.state.alive = false;
+                return;
+            }
             spawn();
         }
 

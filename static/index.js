@@ -5,7 +5,13 @@ const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 let ripples = [] // ripple.js
 let colourize = false;
+let mode = 1;
 const counter = new Counter(); // counter.js
+const dict = {
+    1: Ripple,
+    2: Bubble,
+    // 3: Ball
+};
 
 // setup canvas
 canvas.height = window.innerHeight;
@@ -34,17 +40,18 @@ canvas.addEventListener('keydown', (e) => {
     switch(e.keyCode) {
         case 38:
         case 39: {
-            // ripples.push(new Ripple());
-            ripples.push(new Bubble());
+            ripples.push(new dict[mode]());
             return;
         }
         case 37:
         case 40: {
+            if(!ripples[0]) return;
             ripples[0].state.alive = false;
             return;
         }
         case 13: {
-            colourize = !colourize;
+            mode++;
+            if(mode > 2) mode = 1;
             return;
         }
         case 8: {
@@ -56,7 +63,7 @@ canvas.addEventListener('keydown', (e) => {
 });
 
 canvas.addEventListener('mousemove', (e) => {
-    if(colourize) return;
+    if(mode !== 1) return;
     ripples.push(new Ripple({
         x: e.clientX,
         y: e.clientY,
