@@ -5,7 +5,6 @@ const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 let circles = [];
 let colourize = false;
-let mode = 1;
 const counter = new Counter(); // counter.js
 const dict = {
     1: Ripple, // ripple.js
@@ -23,8 +22,7 @@ canvas.focus();
     // is there a better way to remove circles from screen?
     circles = circles.reduce((rips, r) => {
         if(!r.state.alive) {
-            if(r.state.temp) return rips;
-            if(r.state.mode !== mode) rips.push(new dict[mode](r.state));
+            rips.push(new dict[r.state.next](r.state));
         }
         else rips.push(r);
         return rips;
@@ -46,7 +44,8 @@ canvas.addEventListener('keydown', (e) => {
     switch(e.keyCode) {
         case 38:
         case 39: {
-            circles.push(new dict[mode]());
+            const r = Math.ceil(Math.random() * 3);
+            circles.push(new dict[r]());
             return;
         }
         case 37:
@@ -55,14 +54,8 @@ canvas.addEventListener('keydown', (e) => {
             circles[0].state.alive = false;
             return;
         }
-        case 13: {
-            console.log(mode)
-            mode++;
-            if(mode > 3) mode = 1;
-            console.log(mode)
-            return;
-        }
         case 8: {
+            e.preventDefault();
             circles = [];
             return;
         }
@@ -70,8 +63,9 @@ canvas.addEventListener('keydown', (e) => {
     }
 });
 
+// todo: click and drag only
 canvas.addEventListener('mousemove', (e) => {
-    if(mode !== 1) return;
+    return;
     circles.push(new Ripple({
         x: e.clientX,
         y: e.clientY,

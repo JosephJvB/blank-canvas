@@ -1,14 +1,16 @@
-function Bubble () {
+function Bubble (opts = {}) {
     this.state = {
         alive: true,
-        mode: 2
+        cycles: 0,
+        next: 3
     };
 
     const spawn = () => {
+        this.state.cycles++;
         const c = document.querySelector('canvas').getBoundingClientRect();
         this.state.r = Math.random() * (10 - 5) + 5;
-        this.state.x = Math.random() * c.width;
-        this.state.y = Math.random() * c.height;
+        this.state.x = opts.x || Math.random() * (c.width - 150) + 51;
+        this.state.y = opts.y || Math.random() * (c.height - 150) + 51;
         this.state.v = Math.random() * (1.1 - 0.4) + 0.4;
         this.state.lw = Math.random() * (2.5 - 0.5) + 0.5;
         // these numbers make pretty colours, no logic
@@ -27,7 +29,7 @@ function Bubble () {
 
     this.draw = () => {
         if(this.state.v <= 0) {
-            if(mode !== this.state.mode) {
+            if(this.state.cycles >= 3) {
                 this.state.alive = false;
                 return;
             }

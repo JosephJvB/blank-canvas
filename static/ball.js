@@ -2,8 +2,7 @@ function Ball (opts = {}) {
 
   this.state = {
       alive: true,
-      temp: opts.temp,
-      mode: 1
+      next: 1
   };
 
   const spawn = () => {
@@ -11,6 +10,12 @@ function Ball (opts = {}) {
       this.state.r = opts.r || Math.random() * (50 - 5) + 5;
       this.state.x = opts.x || Math.random() * (c.width - 150) + 51;
       this.state.y = opts.y || Math.random() * (c.height - 150) + 51;
+      this.state.a = Math.random() * (1.1 - 0.4) + 0.4;
+      this.state.rgb = opts.rgb || [
+        Math.random() * 255,
+        Math.random() * 255,
+        Math.random() * 255,
+      ];
       this.state.vx = Math.random() * (1.1 - 0.4) + 0.4;
       this.state.vy = Math.random() * (1.1 - 0.4) + 0.4;
       this.state.lw = 2;
@@ -25,19 +30,30 @@ function Ball (opts = {}) {
 
   // reset if alpha/velocity is 0
   this.draw = () => {
-      if(this.state.v <= 0) {
-          if(mode !== this.state.mode || opts.temp) {
-              this.state.alive = false;
-              return;
-          }
-          spawn();
+      if(this.state.r <= 0) {
+        this.state.alive = false;
+        return;
       }
 
       ctx.beginPath();
       ctx.arc(this.state.x, this.state.y, this.state.r, 0, 2 * Math.PI, false);
       ctx.lineWidth = this.state.lw;
-      ctx.strokeStyle = `rgba(0,0,0,${this.state.v})`;
+      ctx.strokeStyle = `rgba(
+        ${this.state.rgb[0]},
+        ${this.state.rgb[1]},
+        ${this.state.rgb[2]},
+        ${this.state.a}
+      )`;
       ctx.stroke();
+      if(opts.fill) {
+        ctx.fillStyle = `rgba(
+          ${this.state.rgb[0]},
+          ${this.state.rgb[1]},
+          ${this.state.rgb[2]},
+          ${this.state.a - 0.2}
+        )`;
+        ctx.fill();
+      }
 
       const nextx = this.state.x += this.state.vx;
       const nexty = this.state.y += this.state.vy;
@@ -49,5 +65,6 @@ function Ball (opts = {}) {
       }
       this.state.x += this.state.vx;
       this.state.y += this.state.vy;
+      this.state.r -= 0.6;
   };
 }

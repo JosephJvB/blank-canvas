@@ -2,15 +2,16 @@ function Ripple (opts = {}) {
 
     this.state = {
         alive: true,
-        temp: opts.temp,
-        mode: 1
+        cycles: 0,
+        next: 2,
     };
 
     const spawn = () => {
+        this.state.cycles++;
         const c = document.querySelector('canvas').getBoundingClientRect();
         this.state.r = Math.random() * (10 - 5) + 5;
-        this.state.x = opts.x || Math.random() * c.width;
-        this.state.y = opts.y || Math.random() * c.height;
+        this.state.x = opts.x || Math.random() * (c.width - 150) + 51;
+        this.state.y = opts.y || Math.random() * (c.height - 150) + 51;
         this.state.v = Math.random() * (1.1 - 0.4) + 0.4;
         this.state.lw = opts.temp ? 1 : Math.random() * (2.5 - 0.5) + 0.5;
     };
@@ -23,7 +24,7 @@ function Ripple (opts = {}) {
     // reset if alpha/velocity is 0
     this.draw = () => {
         if(this.state.v <= 0) {
-            if(mode !== this.state.mode || opts.temp) {
+            if(this.state.cycles >= 2) {
                 this.state.alive = false;
                 return;
             }
