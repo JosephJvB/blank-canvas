@@ -10,9 +10,8 @@ const counter = new Counter(); // counter.js
 const dict = {
     1: Ripple, // ripple.js
     2: Bubble, // bubble.js
-    // 3: Ball todo
+    3: Ball // ball.js
 };
-
 // setup canvas
 canvas.height = window.innerHeight;
 canvas.width = window.innerWidth;
@@ -25,7 +24,7 @@ canvas.focus();
     circles = circles.reduce((rips, r) => {
         if(!r.state.alive) {
             if(r.state.temp) return rips;
-            if(r.state.mode !== mode) rips.push(new dict[mode]());
+            if(r.state.mode !== mode) rips.push(new dict[mode](r.state));
         }
         else rips.push(r);
         return rips;
@@ -57,8 +56,10 @@ canvas.addEventListener('keydown', (e) => {
             return;
         }
         case 13: {
+            console.log(mode)
             mode++;
-            if(mode > 2) mode = 1;
+            if(mode > 3) mode = 1;
+            console.log(mode)
             return;
         }
         case 8: {
