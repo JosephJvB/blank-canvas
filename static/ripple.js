@@ -9,8 +9,8 @@ function Ripple (opts = {}) {
     const spawn = () => {
         const c = document.querySelector('canvas').getBoundingClientRect();
         this.state.r = Math.random() * (10 - 5) + 5;
-        this.state.x = opts.x || Math.random() * c.width;
-        this.state.y = opts.y || Math.random() * c.height;
+        this.state.x = opts.x || Math.random() * (c.width - 150) + 51;
+        this.state.y = opts.y || Math.random() * (c.height - 150) + 51;
         this.state.v = Math.random() * (1.1 - 0.4) + 0.4;
         this.state.lw = opts.temp ? 1 : Math.random() * (2.5 - 0.5) + 0.5;
     };
