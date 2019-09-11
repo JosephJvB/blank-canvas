@@ -12,7 +12,7 @@ function Ball (opts = {}) {
       this.state.y = opts.y || Math.random() * (c.height - 150) + 51;
       this.state.vx = Math.random() * (1.1 - 0.4) + 0.4;
       this.state.vy = Math.random() * (1.1 - 0.4) + 0.4;
-      this.state.lw = 2;
+      this.state.lw = 1;
       this.state.a = Math.random() * (1.1 - 0.4) + 0.4;
       this.state.rgb = opts.rgb || [
         Math.random() * 255,

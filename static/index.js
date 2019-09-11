@@ -56,10 +56,8 @@ canvas.addEventListener('keydown', (e) => {
             return;
         }
         case 13: {
-            console.log(mode)
             mode++;
             if(mode > 3) mode = 1;
-            console.log(mode)
             return;
         }
         case 8: {
